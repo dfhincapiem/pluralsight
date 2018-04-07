@@ -6,20 +6,27 @@ import java.lang.String;
 class Operation implements Runnable {
 
 
-	/*
 
-	private Integer[] fila;
-	private Integer[] columna;
+
+	private int filaInicio;
+	private int filaTermina;
+	private Integer[][] mat;
+	private Integer[][] mat2;
+	private Integer[][] resultado;
+
 	//private int[] res;
 
 
-	Operation(Integer[] fila, Integer[] columna){
-		this.fila=fila;
-		this.columna=columna;
+	Operation(int filaInicio, int filaTermina, Integer[][] mat,Integer[][] mat2){
+		this.filaInicio=filaInicio;
+		this.filaTermina=filaTermina;
+		this.mat=mat;
+		this.mat2=mat2;
+		this.resultado = new Integer[filaTermina][filaTermina];
 
 	}
 
-	
+	/*	
 	public Integer[] resultado(){	
 
 		Integer[] res = new Integer[fila.length];
@@ -38,15 +45,14 @@ class Operation implements Runnable {
 		*/	
 
 
-	public Integer[][] multMatrix(Integer[][] mat, Integer[][] mat2){
+	public Integer[][] multMatrix(){
 	//public void multMatrix(Integer[][] mat, Integer[][] mat2){
 
 		
-		Integer[][] resultado = new Integer[mat[0].length][mat[0].length];
 
 		int cont = 0;
 
-		for(int m=0;m<mat[0].length;m++){
+		for(int m=filaInicio;m<filaTermina;m++){
 			for(int h=0;h<mat[0].length;h++){
 				for(int i=0;i<mat[0].length;i++){
 					//cont=mat[i][m]*mat[2][]
@@ -72,9 +78,13 @@ class Operation implements Runnable {
 	}
 
 	public void run(){
+		this.multMatrix();
 
 
-		System.out.println("Hola mundo");
+	}
+
+	public Integer[][] getResultado(){
+		return this.resultado;
 
 	}
 
@@ -88,7 +98,7 @@ public class Test{
 
 
 
-		Integer tam = 3;
+		Integer tam = 10;
 
 		Integer[][] matrix= new Integer[tam][tam];
 		Integer[][] matrix2= new Integer[tam][tam];
@@ -103,8 +113,14 @@ public class Test{
 		matrix2=llenarMatrix(matrix2);
 		//imprimirMatrix(matrix);
 		//imprimirMatrix(matrix2);
-		Operation operation = new Operation();
-		matrix3=operation.multMatrix(matrix, matrix2);
+		Operation operation = new Operation(0,tam, matrix, matrix2);
+		Thread thread = new Thread(operation);
+		thread.start();
+		try{
+			thread.join();
+		}
+		catch(Exception e){}
+		matrix3=operation.getResultado();
 		imprimirMatrix(matrix3);
 
 
