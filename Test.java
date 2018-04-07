@@ -1,9 +1,12 @@
 import java.util.*;
 import java.lang.*;
+import java.lang.String;
 
 
 class Operation implements Runnable {
 
+
+	/*
 
 	private Integer[] fila;
 	private Integer[] columna;
@@ -16,7 +19,7 @@ class Operation implements Runnable {
 
 	}
 
-
+	
 	public Integer[] resultado(){	
 
 		Integer[] res = new Integer[fila.length];
@@ -31,6 +34,43 @@ class Operation implements Runnable {
 
 		return res;
 	}
+
+		*/	
+
+
+	public Integer[][] multMatrix(Integer[][] mat, Integer[][] mat2){
+	//public void multMatrix(Integer[][] mat, Integer[][] mat2){
+
+		
+		Integer[][] resultado = new Integer[mat[0].length][mat[0].length];
+
+		int cont = 0;
+
+		for(int m=0;m<mat[0].length;m++){
+			for(int h=0;h<mat[0].length;h++){
+				for(int i=0;i<mat[0].length;i++){
+					//cont=mat[i][m]*mat[2][]
+					//System.out.println(mat[m][i].toString()+"x"+mat[i][h].toString()+"="+Integer.toString(mat[m][i]*mat[i][h]));
+				//	System.out.println(Integer.toString(i)+","+Integer.toString(h));
+					cont+=mat[m][i]*mat[i][h];
+					
+				}
+				resultado[m][h]=cont;				
+				cont=0;
+
+			}
+
+		
+
+		}
+			
+
+		return resultado;
+		
+
+
+	}
+
 	public void run(){
 
 
@@ -52,25 +92,26 @@ public class Test{
 
 		Integer[][] matrix= new Integer[tam][tam];
 		Integer[][] matrix2= new Integer[tam][tam];
+		Integer[][] matrix3= new Integer[tam][tam];
+
 		Integer test[];
 		Integer test2[];
 		Integer resultado[];
     	
 
 		matrix=llenarMatrix(matrix);
-
-		imprimirMatrix(matrix);
-		test=convertirMatrix(matrix, 1, 0);
-		test2=convertirMatrix(matrix, 0, 1);
-		Operation operation = new Operation(test, test2);
-		resultado = operation.resultado();
-
-
+		matrix2=llenarMatrix(matrix2);
+		//imprimirMatrix(matrix);
+		//imprimirMatrix(matrix2);
+		Operation operation = new Operation();
+		matrix3=operation.multMatrix(matrix, matrix2);
+		imprimirMatrix(matrix3);
 
 
 
 
-		System.out.println(Arrays.toString(resultado));
+
+	//	System.out.println(Arrays.toString(resultado));
 
 
 	}
@@ -132,6 +173,8 @@ public class Test{
 
 
 	}
+
+
 
 
 
