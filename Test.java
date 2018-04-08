@@ -12,7 +12,7 @@ class Operation implements Runnable {
 	private int filaTermina;
 	private Integer[][] mat;
 	private Integer[][] mat2;
-	private Integer[][] resultado;
+	private static Integer[][] resultado;
 
 	//private int[] res;
 
@@ -51,6 +51,7 @@ class Operation implements Runnable {
 		
 
 		int cont = 0;
+		System.out.println(Integer.toString(filaInicio)+Integer.toString(filaTermina));
 
 		for(int m=filaInicio;m<filaTermina;m++){
 			for(int h=0;h<mat[0].length;h++){
@@ -113,13 +114,30 @@ public class Test{
 		matrix2=llenarMatrix(matrix2);
 		//imprimirMatrix(matrix);
 		//imprimirMatrix(matrix2);
-		Operation operation = new Operation(0,tam, matrix, matrix2);
+		//Operation operation;
+
+		/*
+
+		Thread[] threads = new Thread[tam];
+		for (int i=0;i<tam;i++){
+			Operation operation = new Operation(i,i+1, matrix, matrix2);
+			threads[i]= new Thread(operation);
+			threads[i].start();
+		}
+		*/
+
+
+
+		Operation operation = new Operation(0,1, matrix, matrix2);
 		Thread thread = new Thread(operation);
-		thread.start();
+        thread.start();
+
+		
 		try{
 			thread.join();
-		}
+		} 
 		catch(Exception e){}
+		
 		matrix3=operation.getResultado();
 		imprimirMatrix(matrix3);
 
